@@ -148,10 +148,10 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: var(--nav-height-universal); /* Consistent height */
+    height: var(--nav-height-universal); 
     background-color: rgba(10, 25, 47, 0.85); 
     backdrop-filter: blur(10px); 
-    z-index: 1060; /* Header above dimmer and menu */
+    z-index: 1060; 
     padding: 0 20px; 
     display: flex;
     align-items: center;
@@ -161,40 +161,37 @@ header {
 
 header .logo a {
     font-family: var(--font-heading);
-    font-size: 1.25rem; /* Reduced logo font size */
+    font-size: 1.25rem; 
     color: var(--heading-text);
-    font-weight: 600; /* Slightly less bold */
-    white-space: nowrap; /* Ensure it stays on one line */
+    font-weight: 600; 
+    white-space: nowrap; 
 }
 header .logo a:hover {
     color: var(--accent1);
     text-decoration: none;
 }
 
-/* Hide .desktop-nav as it's removed from HTML structure */
-/* .desktop-nav { display: none; } */
-
 /* Hamburger Button - Always visible */
 .hamburger-button {
     display: flex; 
     flex-direction: column;
     justify-content: space-around;
-    width: 40px; /* Fixed width for easier positioning */
-    height: 40px; /* Fixed height */
+    width: 40px; 
+    height: 40px; 
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 8px; /* Adjust padding for visual balance */
-    z-index: 1100; /* Ensure it's above other header content if needed */
-    position: relative; /* For transition origin if needed */
+    padding: 8px; 
+    z-index: 1100; 
+    position: relative; 
 }
 
 .hamburger-button .hamburger-line {
     display: block;
-    width: 100%; /* Full width of button */
+    width: 100%; 
     height: 3px;
     background-color: var(--heading-text);
-    margin: 0; /* Remove default margins if any from user agent */
+    margin: 0; 
     transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), 
                 opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
                 background-color 0.3s ease;
@@ -216,7 +213,7 @@ header .logo a:hover {
 }
 .hamburger-button[aria-expanded="true"] .hamburger-line:nth-child(2) {
     opacity: 0;
-    transform: translateX(10px); /* Optional: slide out */
+    transform: translateX(10px); 
 }
 .hamburger-button[aria-expanded="true"] .hamburger-line:nth-child(3) {
     transform: rotate(-45deg) translate(2px, 3px);
@@ -224,21 +221,24 @@ header .logo a:hover {
 
 
 /* Universal Side Panel Menu */
-.mobile-menu { /* Re-purposed for side panel */
+.mobile-menu { 
     position: fixed;
     top: 0;
     right: 0;
-    width: clamp(280px, 70vw, 400px); /* Responsive width: min, preferred, max */
+    width: clamp(280px, 70vw, 400px); 
     height: 100%;
     background-color: var(--secondary-bg); 
     z-index: 1050; 
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Align items to the start (left) */
-    justify-content: flex-start; /* Align content to the top */
-    padding: calc(var(--nav-height-universal) + 30px) 30px 30px; /* Top padding below header */
+    align-items: flex-start; 
+    justify-content: flex-start; 
+    padding-top: calc(var(--nav-height-universal) + 20px); /* Space for close button + header */
+    padding-bottom: 20px;
+    padding-left: 25px;
+    padding-right: 25px; 
     transform: translateX(100%);
-    visibility: hidden; /* Hidden by default */
+    visibility: hidden; 
     transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.4s;
     box-shadow: -5px 0 15px rgba(0,0,0,0.2);
 }
@@ -250,20 +250,43 @@ header .logo a:hover {
 
 .mobile-menu ul {
     list-style: none;
-    text-align: left; /* Align text to the left */
-    width: 100%; /* Full width of panel */
+    text-align: left; 
+    width: 100%; 
+    flex-grow: 1; /* Allow ul to take available vertical space */
+    overflow-y: auto; /* Enable vertical scrollbar if content overflows */
+    padding-right: 10px; /* Space for scrollbar to avoid content overlap, adjust as needed */
+    margin-right: -10px; /* Counteract padding-right for layout purposes if scrollbar is not present */
+    
+    /* For Firefox scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent1) var(--secondary-bg); /* thumb track */
+}
+/* Webkit scrollbar for UL inside mobile-menu */
+.mobile-menu ul::-webkit-scrollbar {
+    width: 8px;
+}
+.mobile-menu ul::-webkit-scrollbar-track {
+    background: var(--secondary-bg); 
+}
+.mobile-menu ul::-webkit-scrollbar-thumb {
+    background: var(--accent1);
+    border-radius: 4px;
+}
+.mobile-menu ul::-webkit-scrollbar-thumb:hover {
+    background: var(--accent2);
 }
 
+
 .mobile-menu ul li {
-    margin: 15px 0; /* Adjust spacing */
+    margin: 10px 0; /* Reduced margin for tighter list */
 }
 
 .mobile-menu ul li a {
-    font-family: var(--font-body); /* Consistent with body font */
-    font-size: 1.2rem; 
-    color: var(--primary-text); /* Use primary text for better contrast on secondary BG */
-    padding: 12px 0; /* Vertical padding, no horizontal padding needed for full width feel */
-    display: block; /* Make links block for full-width tap target */
+    font-family: var(--font-body); 
+    font-size: 1.1rem; /* Slightly smaller for more items */ 
+    color: var(--primary-text); 
+    padding: 10px 5px; /* Adjust padding */
+    display: block; 
     transition: color 0.3s ease, background-color 0.3s ease;
     border-radius: 4px;
 }
@@ -271,18 +294,19 @@ header .logo a:hover {
 .mobile-menu ul li a:hover,
 .mobile-menu ul li a.active {
     color: var(--accent1);
-    background-color: rgba(var(--accent1-rgb), 0.05); /* Subtle highlight */
+    background-color: rgba(var(--accent1-rgb), 0.05); 
 }
 
 .mobile-menu .order-project-btn {
-    display: inline-block; /* Button-like */
+    display: block; /* Make it block to take full width */
     background-color: var(--accent1);
     color: var(--primary-bg);
-    padding: 12px 20px;
+    padding: 12px 15px; /* Adjust padding */
     border-radius: 5px;
     text-align: center;
     font-weight: 600;
-    margin-bottom: 1.5rem; /* Space below button */
+    margin-bottom: 1rem; 
+    font-size: 1.1rem;
 }
 .mobile-menu .order-project-btn:hover {
     background-color: var(--accent2);
@@ -293,19 +317,19 @@ header .logo a:hover {
 .mobile-menu .menu-divider {
     height: 1px;
     background-color: rgba(var(--primary-text-rgb), 0.2);
-    margin: 20px 0; /* Space around divider */
-    list-style: none; /* Remove bullet if it's an li */
+    margin: 15px 0; 
+    list-style: none; 
 }
 
 
 .close-menu-button {
     position: absolute;
-    top: 15px; 
+    top: 12px; /* Align with header padding and hamburger size */
     right: 20px; 
     background: none;
     border: none;
     color: var(--accent1);
-    font-size: 2.2rem; /* Adjust size */
+    font-size: 2.2rem; 
     cursor: pointer;
     padding: 5px;
     line-height: 1;
@@ -317,7 +341,7 @@ header .logo a:hover {
 
 /* Main Content Sections - Increased whitespace */
 main {
-    padding-top: var(--nav-height-universal); /* Adjusted for new universal header height */
+    padding-top: var(--nav-height-universal); 
 }
 
 section {
@@ -396,7 +420,7 @@ footer a:hover {
 }
 footer .footer-copyright-link {
     font-size: 0.9rem;
-    color: var(--primary-text); /* Subtler color for copyright */
+    color: var(--primary-text); 
 }
 footer .footer-copyright-link:hover {
     color: var(--accent1);
@@ -529,7 +553,7 @@ footer .footer-copyright-link:hover {
 }
 
 
-/* Scrollbar Styling (Webkit Browsers) */
+/* Scrollbar Styling (Webkit Browsers) - Global */
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -560,10 +584,16 @@ footer .footer-copyright-link:hover {
         padding: 100px 40px; 
     }
     header {
-        height: var(--nav-height-universal); /* Ensure universal height is used */
+        height: var(--nav-height-universal); 
     }
     main {
         padding-top: var(--nav-height-universal);
+    }
+     .mobile-menu {
+        padding-top: calc(var(--nav-height-universal) + 25px);
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-bottom: 25px;
     }
 }
 
@@ -574,12 +604,10 @@ footer .footer-copyright-link:hover {
         font-size: 15px;
     }
      header {
-        height: var(--nav-height-universal); /* Universal header height */
+        height: var(--nav-height-universal); 
         padding: 0 15px;
     }
-    .desktop-nav { /* This class is no longer in HTML but good to keep if accidentally re-added */
-        display: none; 
-    }
+    /* .desktop-nav is already removed from HTML, so no need to hide */
     .hamburger-button {
         display: flex; 
     }
@@ -610,6 +638,12 @@ footer .footer-copyright-link:hover {
     .card {
         padding: 1.75rem; 
     }
+    .mobile-menu {
+        padding-top: calc(var(--nav-height-universal) + 20px);
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+    }
 }
 
 /* Smaller mobile phones (<= 480px) */
@@ -633,7 +667,7 @@ footer .footer-copyright-link:hover {
     }
 
     header .logo a {
-        font-size: 1.1rem; /* Further reduce logo on very small screens */
+        font-size: 1.1rem; 
     }
     header {
         padding: 0 15px;
@@ -660,19 +694,25 @@ footer .footer-copyright-link:hover {
     }
 
     .mobile-menu {
-        width: 90%; /* More screen coverage on small mobiles */
-        padding: calc(var(--nav-height-universal) + 20px) 20px 20px;
+        width: 90%; 
+        padding-top: calc(var(--nav-height-universal) + 15px);
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 15px;
+    }
+    .mobile-menu ul {
+        padding-right: 10px; 
     }
     .mobile-menu ul li a {
-        font-size: 1.5rem; 
+        font-size: 1.4rem; 
     }
     .close-menu-button {
         font-size: 2rem; 
-        top: 15px;
-        right: 15px;
+        top: 12px; 
+        right: 12px;
     }
     .recommendations-container ol li {
-        padding: 1.25rem 1.5rem 1.25rem 3rem; /* Adjust padding for smaller counter */
+        padding: 1.25rem 1.5rem 1.25rem 3rem; 
     }
     .recommendations-container ol li::before {
         width: 28px;
@@ -696,7 +736,7 @@ footer .footer-copyright-link:hover {
     text-align: left;
 }
 .visualization-container > h4 { /* This is the table title, e.g., "Table 1: ..." */
-    font-size: 1.4rem; /* Adjusted to match other H4s */
+    font-size: 1.4rem; 
     color: var(--accent2);
     margin-bottom: 1em; 
 }
