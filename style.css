@@ -10,7 +10,8 @@
     --font-body: 'Inter', sans-serif;
     --font-heading: 'Roboto Mono', monospace; /* Or 'Space Grotesk' */
 
-    --nav-height: 70px; /* Example value, adjust as needed */
+    --nav-height: 70px;
+    --nav-height-mobile: 60px; /* For mobile header */
 }
 
 /* Basic Reset & Global Styles */
@@ -31,41 +32,81 @@ body {
     font-family: var(--font-body);
     background-color: var(--primary-bg);
     color: var(--primary-text);
-    line-height: 1.7; /* Adjusted from 1.6-1.8 for better readability */
+    line-height: 1.75; 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Subtle background gradient - uncomment and customize if desired */
-    /* background: linear-gradient(180deg, var(--primary-bg) 0%, #081424 100%); */
 }
 
-/* Typography Styling */
+body.body-no-scroll {
+    overflow: hidden;
+}
+
+/* Typography Styling - Refined for labs.google feel (more whitespace, clearer hierarchy) */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     color: var(--heading-text);
-    margin-bottom: 1rem;
+    margin-top: 1.75em; 
+    margin-bottom: 1em; 
     line-height: 1.3;
 }
 
 h1 {
-    font-size: 2.8rem; /* Approx 44.8px */
-    margin-bottom: 1.5rem;
+    font-size: 3rem; 
+    margin-top: 0; 
+    margin-bottom: 1em;
 }
 
 h2 {
-    font-size: 2rem; /* Approx 32px */
-    margin-bottom: 1.25rem;
+    font-size: 2.25rem; 
+    margin-top: 2.5em; 
+    margin-bottom: 1.25em; 
     border-bottom: 2px solid var(--accent1);
     padding-bottom: 0.5rem;
-    display: inline-block; /* To make border only as wide as text */
+    display: inline-block;
 }
+section:first-of-type h2 { 
+    margin-top: 0em; /* No top margin for first H2 in a section that's first after hero */
+}
+#executive-summary h2 { /* Specific for first content section */
+     margin-top: 0em;
+}
+
 
 h3 {
-    font-size: 1.5rem; /* Approx 24px */
-    color: var(--accent1); /* Using accent for H3 as per some modern designs */
+    font-size: 1.75rem; 
+    color: var(--accent1);
+    margin-top: 2em;
+    margin-bottom: 1em;
 }
 
+h4 { 
+    font-size: 1.4rem; 
+    color: var(--accent2);
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+}
+
+.card h4 { 
+    font-size: 1.25rem; 
+    margin-top: 0; 
+    margin-bottom: 1em; 
+    color: var(--accent1);
+    font-family: var(--font-heading);
+    border-bottom: 1px solid var(--accent2);
+    padding-bottom: 0.6em; 
+}
+.visualization-container > h4 { /* Table titles */
+    font-size: 1.6rem; 
+    color: var(--heading-text);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--secondary-bg);
+    text-align: left;
+}
+
+
 p {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5em; 
 }
 
 a {
@@ -77,7 +118,6 @@ a {
 a:hover,
 a:focus {
     color: var(--accent2);
-    /* filter: brightness(1.2); */
     text-decoration: underline;
 }
 
@@ -88,13 +128,13 @@ header {
     left: 0;
     width: 100%;
     height: var(--nav-height);
-    background-color: rgba(23, 42, 69, 0.85); /* var(--secondary-bg) with transparency */
-    backdrop-filter: blur(10px); /* Frosted glass effect */
+    background-color: rgba(10, 25, 47, 0.85); 
+    backdrop-filter: blur(10px); 
     z-index: 1000;
-    padding: 0 20px;
+    padding: 0 25px; 
     display: flex;
     align-items: center;
-    justify-content: space-between; /* For logo and nav items */
+    justify-content: space-between; 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -109,14 +149,15 @@ header .logo a:hover {
     text-decoration: none;
 }
 
-header nav ul {
+/* Desktop Navigation */
+.desktop-nav ul {
     list-style: none;
     display: flex;
-    gap: 20px; /* Spacing between nav items */
+    gap: 25px; 
 }
 
-header nav ul li a {
-    font-family: var(--font-body); /* Using body font for nav links for clarity */
+.desktop-nav ul li a {
+    font-family: var(--font-body); 
     color: var(--primary-text);
     padding: 10px 15px;
     font-weight: 500;
@@ -124,63 +165,179 @@ header nav ul li a {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-header nav ul li a:hover,
-header nav ul li a.active { /* .active class will be added by JS */
+.desktop-nav ul li a:hover,
+.desktop-nav ul li a.active { 
     color: var(--accent1);
-    background-color: rgba(100, 255, 218, 0.1); /* Subtle highlight */
+    background-color: rgba(100, 255, 218, 0.1); 
     text-decoration: none;
 }
 
-/* Main Content Sections */
+/* Hamburger Button */
+.hamburger-button {
+    display: none; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1100; 
+}
+
+.hamburger-button .hamburger-line {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--heading-text);
+    margin: 5px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger-button:hover .hamburger-line {
+    background-color: var(--accent1);
+}
+.hamburger-button[aria-expanded="true"] .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.hamburger-button[aria-expanded="true"] .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+.hamburger-button[aria-expanded="true"] .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+
+/* Mobile Menu Panel */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-bg); 
+    z-index: 1050; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-menu.is-open {
+    visibility: visible;
+    opacity: 1;
+}
+
+.mobile-menu ul {
+    list-style: none;
+    text-align: center;
+}
+
+.mobile-menu ul li {
+    margin: 20px 0;
+}
+
+.mobile-menu ul li a {
+    font-family: var(--font-heading); 
+    font-size: 1.8rem; 
+    color: var(--heading-text);
+    padding: 10px 20px;
+    transition: color 0.3s ease;
+}
+
+.mobile-menu ul li a:hover,
+.mobile-menu ul li a.active {
+    color: var(--accent1);
+}
+
+.close-menu-button {
+    position: absolute;
+    top: 25px; 
+    right: 25px; 
+    background: none;
+    border: none;
+    color: var(--accent1);
+    font-size: 2.5rem;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+}
+.close-menu-button:hover {
+    color: var(--accent2);
+}
+
+
+/* Main Content Sections - Increased whitespace */
 main {
-    padding-top: var(--nav-height); /* Offset content below fixed header */
+    padding-top: var(--nav-height); 
 }
 
 section {
-    padding: 80px 40px; /* Increased padding */
-    min-height: 80vh; /* Default min-height */
-    /* border-bottom: 1px solid var(--secondary-bg); /* Subtle separator */
+    padding: 120px 80px; 
+    min-height: auto; 
 }
+section:first-of-type { 
+    padding: 0; 
+}
+
+/* Wrapper for general text content within sections for better readability */
+.content-wrapper {
+    max-width: 900px; 
+    margin-left: auto;
+    margin-right: auto;
+}
+.content-wrapper > p, 
+.content-wrapper > ul, 
+.content-wrapper > ol {
+    margin-bottom: 1.5em; 
+}
+.content-wrapper > h3,
+.content-wrapper > h4 { 
+    margin-top: 2em;
+}
+
 
 section:last-of-type {
     border-bottom: none;
 }
 
 #hero {
-    min-height: calc(100vh - var(--nav-height)); /* Fill screen below nav */
+    min-height: calc(100vh - var(--nav-height)); 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    padding: 60px 30px; 
     /* HERO BACKGROUND IMAGE: Replace 'placeholder-hero-bg.jpg' with a high-quality,
        abstract image fitting an ultra-modern AI/DAO theme (e.g., plexus network,
        geometric design, data visualization motif, or stylized nebula/space).
        Ensure the image is web-optimized for performance. */
     background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)), url('placeholder-hero-bg.jpg') no-repeat center center/cover;
-    /* Add a subtle pattern or animated gradient if desired */
 }
 
 #hero h1 {
-    font-size: 3.5rem; /* Larger for hero */
-    max-width: 800px;
+    font-size: 3.2rem; 
+    max-width: 900px; 
+    margin-bottom: 1em;
 }
 #hero p {
-    font-size: 1.2rem;
+    font-size: 1.25rem; 
     color: var(--accent1);
+    margin-top: 0.5em;
 }
 
 
-/* Footer */
+/* Footer - Increased whitespace */
 footer {
     background-color: var(--secondary-bg);
     color: var(--primary-text);
     text-align: center;
-    padding: 40px 20px;
+    padding: 50px 30px; 
 }
 
 footer p {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem; 
 }
 
 footer a {
@@ -191,65 +348,57 @@ footer a:hover {
     color: var(--accent2);
 }
 
-/* Placeholder Sections for Future Components */
-/* Styles for Table Visualizations */
-/* Card Component Styles */
-/* Abstract Geometric Shapes & Thin Line Accents */
 
 /* --- Enhanced List and Card Styles --- */
 .visual-list-container {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: 2.5rem; 
+    margin-bottom: 2.5rem; 
 }
 
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    gap: 2.5rem; 
+    margin-top: 2rem; 
 }
 
 .card {
     background-color: var(--secondary-bg);
     border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 2.25rem; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25); 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-left: 4px solid var(--accent1); /* Accent border */
+    border-left: 4px solid var(--accent1); 
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(var(--accent1-rgb, 100, 255, 218), 0.15); /* Use RGB version of accent1 for shadow */
+    box-shadow: 0 6px 12px rgba(var(--accent1-rgb, 100, 255, 218), 0.1); 
 }
 
-.card h4 {
-    color: var(--accent1);
-    font-size: 1.25rem; /* Approx 20px */
-    margin-bottom: 0.75rem;
-    font-family: var(--font-heading);
-}
+/* Card h4 already defined in Typography section */
 
 .card h5 {
     color: var(--heading-text);
-    font-size: 1.1rem; /* Approx 17.6px */
-    margin-bottom: 0.5rem;
+    font-size: 1.15rem; 
+    margin-bottom: 0.6em;
     font-family: var(--font-heading);
 }
 
 .card p {
-    font-size: 0.95rem; /* Approx 15.2px */
-    margin-bottom: 0.5rem;
-    line-height: 1.6;
+    font-size: 1rem; 
+    margin-bottom: 0.75em; 
+    line-height: 1.7;
 }
 
-.card p strong {
-    color: var(--primary-text); /* Brighter than regular p text if needed */
+.card p strong { 
+    color: var(--accent1); 
     font-weight: 600;
+    margin-right: 0.5em; 
 }
 
 .card ul {
-    list-style: none; /* Remove default bullets if styling as cards */
+    list-style: none; 
     padding-left: 0;
 }
 
@@ -261,7 +410,7 @@ footer a:hover {
 }
 
 .card ul li::before {
-    content: '»'; /* Or a more modern icon/SVG */
+    content: '»'; 
     position: absolute;
     left: 0;
     color: var(--accent1);
@@ -270,9 +419,9 @@ footer a:hover {
 
 /* Specific styling for table-like cards */
 .table-card-grid .card p {
-    display: flex; /* For aligning label and value */
+    display: flex; 
     justify-content: space-between;
-    border-bottom: 1px solid rgba(204, 214, 246, 0.1); /* Subtle separator for items */
+    border-bottom: 1px solid rgba(204, 214, 246, 0.1); 
     padding-bottom: 0.5rem;
 }
 .table-card-grid .card p:last-child {
@@ -280,12 +429,12 @@ footer a:hover {
 }
 
 .table-card-grid .card p strong {
-    color: var(--accent1); /* Label color */
+    color: var(--accent1); 
     margin-right: 10px;
-    flex-shrink: 0; /* Prevent label from shrinking */
+    flex-shrink: 0; 
 }
 .table-card-grid .card p span {
-    text-align: right; /* Align value to the right */
+    text-align: right; 
     color: var(--primary-text);
 }
 
@@ -293,30 +442,37 @@ footer a:hover {
 .enhanced-list {
     list-style: none;
     padding-left: 0;
-    margin-top: 1rem;
+    margin-top: 1.5rem; 
 }
 
 .enhanced-list li {
     background-color: var(--secondary-bg);
-    padding: 1rem 1.5rem;
-    margin-bottom: 0.75rem;
+    padding: 1.25rem 1.75rem; 
+    margin-bottom: 1rem; 
     border-radius: 6px;
-    border-left: 3px solid var(--accent2);
+    border-left: 4px solid var(--accent2); 
     transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
 }
 
 .enhanced-list li:hover {
-    background-color: #2A3F5E; /* Slightly lighter shade of secondary-bg */
+    background-color: #2A3F5E; 
 }
 
-.enhanced-list li strong { /* For emphasizing parts of the list item */
+.enhanced-list li strong { 
     color: var(--accent1);
+    font-weight: 600; 
 }
 
 /* Section-specific card grid adjustments if needed */
-#introduction .cards-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Smaller cards for intro section */
+#introduction .cards-grid { /* For smaller cards in intro like DAO characteristics */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+    gap: 1.5rem;
 }
+#introduction .list-cards-grid .card {
+    padding: 1.5rem;
+}
+
 
 /* Scrollbar Styling (Webkit Browsers) */
 ::-webkit-scrollbar {
@@ -337,127 +493,114 @@ footer a:hover {
 }
 
 /* Responsive Design */
-@media (max-width: 992px) { /* Medium devices (tablets, less than 992px) */
+@media (max-width: 992px) { 
     .cards-grid {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    h1 { font-size: 2.6rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.6rem; }
+    #hero h1 { font-size: 2.8rem; }
+    section {
+        padding: 100px 40px; 
     }
 }
 
 
-/* Tablets and larger phones */
+/* Tablets and smaller (<= 768px) - Hamburger menu becomes active */
 @media (max-width: 768px) {
     html {
         font-size: 15px;
     }
 
-    h1 {
-        font-size: 2.2rem;
+    header {
+        height: var(--nav-height-mobile); 
+        padding: 0 15px;
     }
-    #hero h1 {
-        font-size: 2.5rem;
+    .desktop-nav {
+        display: none; 
+    }
+    .hamburger-button {
+        display: flex; 
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    main {
+        padding-top: var(--nav-height-mobile);
     }
 
-    h2 {
-        font-size: 1.8rem;
-    }
+    h1 { font-size: 2.2rem; }
+    #hero h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.4rem; }
+    h4 { font-size: 1.2rem; }
 
-    h3 {
-        font-size: 1.3rem;
-    }
 
     section {
-        padding: 60px 20px;
+        padding: 100px 30px; /* Adjusted section padding for tablets */
+    }
+    #hero { 
+      padding: 40px 20px; 
+      min-height: calc(100vh - var(--nav-height-mobile));
     }
 
-    header {
-        padding: 0 15px;
-        height: auto; /* Allow header to grow if nav items wrap */
-        min-height: var(--nav-height);
-    }
-    
-    header nav {
-        width: 100%; /* Make nav take full width if needed for hamburger */
-    }
-
-    header nav ul {
-        /* For now, allow wrapping. Later, implement hamburger */
-        flex-wrap: wrap;
-        justify-content: center; /* Center wrapped items */
-        gap: 5px; /* Reduced gap for wrapped items */
-        padding-top: 5px; /* Add some space if wrapping below logo */
-        padding-bottom: 5px;
-    }
-    header nav ul li a {
-        padding: 8px 10px;
-    }
-    header .logo a {
-        font-size: 1.3rem;
-    }
 
     .cards-grid {
-        grid-template-columns: 1fr; /* Stack cards on smaller tablets / large phones */
+        grid-template-columns: 1fr; 
+        gap: 2rem; 
+    }
+    .card {
+        padding: 1.75rem; 
     }
 }
 
-/* Smaller mobile phones */
+/* Smaller mobile phones (<= 480px) */
 @media (max-width: 480px) {
     html {
         font-size: 14px;
     }
 
-    h1 {
-        font-size: 1.8rem;
-    }
-    #hero h1 {
-        font-size: 2rem;
-    }
+    h1 { font-size: 1.8rem; } 
+    #hero h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+    h4 { font-size: 1.05rem; }
 
-    h2 {
-        font-size: 1.5rem;
-    }
-
-    h3 {
-        font-size: 1.2rem;
-    }
 
     section {
-        padding: 40px 15px;
+        padding: 80px 20px; 
     }
-    
-    header .logo {
-        /* Potentially hide logo text on very small screens or make it smaller */
-        margin-bottom: 10px; /* Space if nav wraps below */
+     #hero { 
+      padding: 30px 15px; 
     }
 
-    header {
-        flex-direction: column; /* Stack logo and nav */
-        align-items: center;
-        padding-bottom: 10px;
-    }
 
-    header nav ul {
-        gap: 5px;
-    }
-    header nav ul li a {
-        font-size: 0.9rem;
-        padding: 6px 8px;
-    }
     .card {
-        padding: 1rem;
+        padding: 1.5rem; 
     }
     .card h4 {
-        font-size: 1.15rem;
+        font-size: 1.05rem;
     }
     .card p {
-        font-size: 0.9rem;
+        font-size: 0.92rem;
     }
+
     .table-card-grid .card p {
-        flex-direction: column; /* Stack label and value */
+        flex-direction: column; 
         align-items: flex-start;
     }
     .table-card-grid .card p span {
         text-align: left;
-        margin-top: 0.25rem;
+        margin-top: 0.3em; 
+    }
+
+    .mobile-menu ul li a {
+        font-size: 1.5rem; 
+    }
+    .close-menu-button {
+        font-size: 2rem; 
+        top: 15px;
+        right: 15px;
     }
 }
 
@@ -472,8 +615,8 @@ footer a:hover {
 
 /* Common style for the heading of a visualization container */
 .visualization-container > h3,
-.visualization-container > h4 { /* For sub-headings within viz sections */
-    font-size: 1.6rem; /* Approx 25.6px */
+.visualization-container > h4 { 
+    font-size: 1.6rem; 
     color: var(--heading-text);
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
@@ -481,83 +624,84 @@ footer a:hover {
     text-align: left;
 }
 .visualization-container > h4 {
-    font-size: 1.3rem;
+    font-size: 1.3rem; 
     color: var(--accent2);
+    margin-bottom: 1em; 
 }
 
 
 /* Table 1: DAO Governance Models */
-#table1-viz .card h4 { /* Governance Model Name */
+#table1-viz .card h4 { 
     border-bottom: 1px solid var(--accent2);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
+    padding-bottom: 0.6em; 
+    margin-bottom: 1em; 
 }
-#table1-viz .card p strong { /* Labels like "Key Characteristics:" */
+#table1-viz .card p strong { 
     display: block;
-    color: var(--primary-text); /* Slightly less emphasis than accent1 */
-    margin-bottom: 0.25rem;
-    font-weight: 600; /* Ensure it's bold */
+    color: var(--primary-text); 
+    margin-bottom: 0.3em; 
+    font-weight: 600; 
 }
-#table1-viz .card p { /* Text content for each characteristic */
-    margin-bottom: 0.75rem;
-    font-size: 0.9rem;
+#table1-viz .card p { 
+    margin-bottom: 0.85em; 
+    font-size: 0.95rem; 
 }
 
 
 /* Table 2: AI Agent Capabilities */
 #table2-viz .card {
-    border-left-color: var(--accent2); /* Different accent for this table */
+    border-left-color: var(--accent2); 
 }
-#table2-viz .card h4 { /* Capability Name */
+#table2-viz .card h4 { 
     color: var(--accent2);
 }
-#table2-viz .card p strong { /* "Description:" */
+#table2-viz .card p strong { 
     color: var(--primary-text);
     font-weight: 600;
 }
-#table2-viz .card p:last-child { /* Specific DAO Application Examples */
-    margin-top: 0.5rem;
+#table2-viz .card p:last-child { 
+    margin-top: 0.75em; 
     font-style: italic;
-    color: #a8b2d1; /* Lighter text for examples */
+    color: #a8b2d1; 
 }
 
 
 /* Table 3 & 4 & 5 & 6 will use .table-card-grid for key-value pair styling within cards */
-.table-card-grid .card h4 { /* Main item title e.g., Revenue Model or DAO Limitation */
+.table-card-grid .card h4 { 
     border-bottom: 1px solid var(--accent2);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
+    padding-bottom: 0.6em; 
+    margin-bottom: 1em; 
 }
 
 /* For lists that are transformed into cards or visually distinct items */
-.list-visualization-container > h4 {
-    font-size: 1.3rem; /* Consistent with other sub-headings */
+.list-visualization-container > h4 { 
+    font-size: 1.4rem; 
     color: var(--accent2);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5em; 
 }
 
 .list-cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 2.5rem; 
 }
 
 .list-cards-grid .card {
-    padding: 1.25rem; /* Slightly smaller padding for list cards */
+    padding: 1.75rem; 
 }
-.list-cards-grid .card ul li::before {
-    content: '✓'; /* Checkmark for these lists */
+.list-cards-grid .card ul li::before { 
+    content: '✓'; 
 }
 
 /* Actionable recommendations custom styling */
-.recommendations-container > div {
-    margin-bottom: 2.5rem;
+.recommendations-container > div { 
+    margin-bottom: 3.5rem; 
 }
-.recommendations-container h4 { /* e.g., "For Startups:" */
-    font-size: 1.4rem;
+.recommendations-container h4 { 
+    font-size: 1.75rem; 
     color: var(--accent1);
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
+    margin-bottom: 1.75em; 
+    padding-bottom: 0.6em; 
     border-bottom: 1px solid var(--secondary-bg);
 }
 .recommendations-container ol {
@@ -567,24 +711,25 @@ footer a:hover {
 }
 .recommendations-container ol li {
     background-color: var(--secondary-bg);
-    padding: 1rem 1.5rem 1rem 3rem; /* More padding on left for counter */
-    margin-bottom: 1rem;
-    border-radius: 6px;
+    padding: 1.5rem 2rem 1.5rem 4rem; 
+    margin-bottom: 1.5rem; 
+    border-radius: 8px; 
     border-left: 4px solid var(--accent2);
     position: relative;
     counter-increment: recommendation-counter;
-    font-size: 0.95rem;
+    font-size: 1rem; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
 }
 .recommendations-container ol li::before {
     content: counter(recommendation-counter);
     position: absolute;
-    left: 1rem;
+    left: 1.5rem; 
     top: 50%;
     transform: translateY(-50%);
     background-color: var(--accent2);
     color: var(--primary-bg);
-    width: 28px;
-    height: 28px;
+    width: 36px; 
+    height: 36px; 
     border-radius: 50%;
     display: flex;
     align-items: center;
