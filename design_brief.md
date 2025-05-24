@@ -10,16 +10,45 @@ This document outlines the design conception for a website presenting the resear
     *   **User Engagement for Dense Content:** For dense, interconnected content, a single-page structure encourages continuous reading and exploration without the interruption of page loads. It allows users to easily scroll through the narrative of the paper.
     *   **Intuitive Navigation:** With a well-implemented sticky navigation bar, users can easily jump between sections or understand their current position within the document. This maintains context and improves usability for a lengthy document.
 
-*   **Navigation Mechanism (for Single-Page Site):**
-    *   **Desktop:** A **sticky top navigation bar** (as currently implemented) will be retained for desktop views. This bar contains horizontal links that smoothly scroll the user to corresponding sections, with the active section highlighted. This is effective for larger screens.
-    *   **Mobile/Tablet:** A **hamburger menu** will be implemented.
-        *   **Trigger:** Activated 'on click' of a standard three-line hamburger icon.
-        *   **Icon:** A clean, modern three-line hamburger icon.
-        *   **Panel Style:** A full-screen overlay will appear (e.g., using `var(--secondary-bg)` or a slightly darker variant of `var(--primary-bg)` for the background, ensuring text contrast).
-        *   **Panel Content:** Navigation links will be listed vertically. Text will be styled for clarity, with ample touch targets.
-        *   **Close Mechanism:** A clearly visible 'X' icon to close the overlay.
-        *   **Animation:** A smooth fade-in or slide-in (e.g., from the right or top) animation for the overlay panel is recommended.
-    *   A "Back to Top" button should still be included for convenience on all views.
+*   **Navigation Mechanism: Universal Side Panel Menu**
+    *   **Visibility & Trigger:** A hamburger icon will be visible on all screen sizes, typically positioned in the top-right corner of the header. This icon will toggle the visibility of the side panel menu on click.
+    *   **Panel Style:**
+        *   The panel will slide in from the right side of the screen.
+        *   It should cover a significant portion of the screen (e.g., 70-90% on mobile, 300-400px fixed width on desktop) to feel like a substantial overlay.
+        *   The main content area behind the panel should be dimmed (e.g., using a semi-transparent black overlay) to bring focus to the menu.
+        *   **Background Color:** Use `var(--secondary-bg)` or a slightly darker variant of `var(--primary-bg)` (e.g., `#081424`) for the panel itself, ensuring high contrast for text and interactive elements.
+    *   **Panel Content (in order):**
+        1.  **"Order Project" Button:** A prominent button at the top of the panel.
+            *   Text: "Order Project"
+            *   Link: `https://aiix.pro` (opens in a new tab).
+            *   Styling: Should stand out, possibly using `var(--accent1)` for its background or border.
+        2.  **"Full Research PDF" Link:**
+            *   Text: "View Full Research (PDF)"
+            *   Link: `https://github.com/LFGsyndicate/DAO-AI-Future/blob/main/DAO-AI-Future.pdf` (opens in a new tab).
+            *   Styling: Clear, easily tappable/clickable link.
+        3.  **Visual Divider (Optional):** A subtle `<hr>` or a styled border (e.g., `1px solid var(--primary-text)` with some opacity) to separate the action links from navigation links.
+        4.  **Navigation Links:** Vertical list of links to website sections (Home, Executive Summary, Introduction, etc.).
+            *   Styling: Links should be well-spaced, with large tap targets, and clear text (e.g., using `var(--heading-text)` or a bright variant of `var(--primary-text)`). Active link highlighting should apply here as well.
+    *   **Close Mechanism:** A clearly visible 'X' icon, typically positioned at the top-right corner of the *panel itself*, or aligned with the hamburger icon's original position but now on the panel.
+    *   **Animation:** A smooth slide-in/slide-out animation for the panel (e.g., `transform: translateX(0%)` when open, `transform: translateX(100%)` when closed).
+    *   A "Back to Top" button should still be included in the main page footer for convenience.
+
+### 1.1. Favicon
+*   The website should include `<link>` tags in the `<head>` of `index.html` for a favicon.
+*   Placeholder links to be added:
+    *   `<link rel="icon" href="favicon.ico" sizes="any">`
+    *   `<link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">`
+    *   `<link rel="apple-touch-icon" href="apple-touch-icon.png">` (Optional, but good practice)
+*   The user will need to provide the actual `favicon.ico`, `favicon-32x32.png`, and (if used) `apple-touch-icon.png` image files in the root directory.
+
+### 1.2. SEO Meta Tags
+*   For SEO, `index.html` should include the following meta tags in the `<head>`:
+    *   A descriptive title: `<title>The Symbiosis of DAOs and AI Agents</title>` (already present, confirm relevance).
+    *   Description: `<meta name="description" content="Official research presentation website on the symbiosis of Decentralized Autonomous Organizations (DAOs) and AI agents, exploring new frontiers for revenue generation and startup innovation.">`
+    *   Keywords: `<meta name="keywords" content="DAO, AI, research, symbiosis, decentralized autonomous organizations, artificial intelligence, blockchain, innovation, startups, revenue generation, AI agents, DAO governance">`
+    *   Author (Optional but good): `<meta name="author" content="RuHunt">` (or the actual author/organization)
+    *   Viewport: `<meta name="viewport" content="width=device-width, initial-scale=1.0">` (already present, confirm).
+    *   Charset: `<meta charset="UTF-8">` (already present, confirm).
 
 ## 2. Visual Style & Color Palette
 
@@ -41,6 +70,16 @@ This document outlines the design conception for a website presenting the resear
     *   This palette is often associated with tech, finance, and cutting-edge innovation sectors.
     *   The high contrast between text and background ensures readability, while the vibrant accents guide the user's attention to important elements.
     *   The deep navy and slate grays provide a professional and focused environment, minimizing visual clutter.
+
+### 2.1. Logo Styling
+*   The site logo text ("DAO & AI Symbiosis") should be restyled to be smaller and more compact.
+*   Aim for it to fit comfortably on a single line within the header, even on smaller desktop views before the universal side panel menu becomes the primary navigation.
+*   The font size and weight should be adjusted to ensure it is legible but not overly dominant, maintaining a clean and professional look.
+
+### 2.2. Footer Design
+*   The footer content should be updated to: "© 2025 by RuHunt" (using the copyright symbol).
+*   This text should be a hyperlink pointing to `https://t.me/ruhunt`.
+*   The styling should be minimal and clean, consistent with the overall dark theme.
 
 ## 3. Typography
 

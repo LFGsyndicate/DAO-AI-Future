@@ -6,12 +6,14 @@
     --heading-text: #E6F1FF;
     --accent1: #64FFDA;
     --accent2: #FFBF69;
+    --primary-text-rgb: 204, 214, 246; /* For rgba usage */
+    --accent1-rgb: 100, 255, 218;
+
 
     --font-body: 'Inter', sans-serif;
-    --font-heading: 'Roboto Mono', monospace; /* Or 'Space Grotesk' */
+    --font-heading: 'Roboto Mono', monospace;
 
-    --nav-height: 70px;
-    --nav-height-mobile: 60px; /* For mobile header */
+    --nav-height-universal: 60px; /* Consistent header height */
 }
 
 /* Basic Reset & Global Styles */
@@ -25,7 +27,7 @@
 
 html {
     scroll-behavior: smooth;
-    font-size: 16px; /* Base font size */
+    font-size: 16px; 
 }
 
 body {
@@ -35,13 +37,32 @@ body {
     line-height: 1.75; 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    position: relative; /* For content dimming overlay */
 }
 
 body.body-no-scroll {
     overflow: hidden;
 }
+body::before { /* Content dimming overlay */
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1020; /* Below menu, above main content */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+body.body-no-scroll::before {
+    opacity: 1;
+    visibility: visible;
+}
 
-/* Typography Styling - Refined for labs.google feel (more whitespace, clearer hierarchy) */
+
+/* Typography Styling */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     color: var(--heading-text);
@@ -65,9 +86,9 @@ h2 {
     display: inline-block;
 }
 section:first-of-type h2 { 
-    margin-top: 0em; /* No top margin for first H2 in a section that's first after hero */
+    margin-top: 0em; 
 }
-#executive-summary h2 { /* Specific for first content section */
+#executive-summary h2 { 
      margin-top: 0em;
 }
 
@@ -127,11 +148,11 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: var(--nav-height);
+    height: var(--nav-height-universal); /* Consistent height */
     background-color: rgba(10, 25, 47, 0.85); 
     backdrop-filter: blur(10px); 
-    z-index: 1000;
-    padding: 0 25px; 
+    z-index: 1060; /* Header above dimmer and menu */
+    padding: 0 20px; 
     display: flex;
     align-items: center;
     justify-content: space-between; 
@@ -140,124 +161,151 @@ header {
 
 header .logo a {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: 1.25rem; /* Reduced logo font size */
     color: var(--heading-text);
-    font-weight: bold;
+    font-weight: 600; /* Slightly less bold */
+    white-space: nowrap; /* Ensure it stays on one line */
 }
 header .logo a:hover {
     color: var(--accent1);
     text-decoration: none;
 }
 
-/* Desktop Navigation */
-.desktop-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 25px; 
-}
+/* Hide .desktop-nav as it's removed from HTML structure */
+/* .desktop-nav { display: none; } */
 
-.desktop-nav ul li a {
-    font-family: var(--font-body); 
-    color: var(--primary-text);
-    padding: 10px 15px;
-    font-weight: 500;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.desktop-nav ul li a:hover,
-.desktop-nav ul li a.active { 
-    color: var(--accent1);
-    background-color: rgba(100, 255, 218, 0.1); 
-    text-decoration: none;
-}
-
-/* Hamburger Button */
+/* Hamburger Button - Always visible */
 .hamburger-button {
-    display: none; 
-    background: none;
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40px; /* Fixed width for easier positioning */
+    height: 40px; /* Fixed height */
+    background: transparent;
     border: none;
     cursor: pointer;
-    padding: 10px;
-    z-index: 1100; 
+    padding: 8px; /* Adjust padding for visual balance */
+    z-index: 1100; /* Ensure it's above other header content if needed */
+    position: relative; /* For transition origin if needed */
 }
 
 .hamburger-button .hamburger-line {
     display: block;
-    width: 25px;
+    width: 100%; /* Full width of button */
     height: 3px;
     background-color: var(--heading-text);
-    margin: 5px 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    margin: 0; /* Remove default margins if any from user agent */
+    transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), 
+                opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+                background-color 0.3s ease;
 }
+.hamburger-button .hamburger-line:nth-child(1) {
+    transform-origin: top left;
+}
+.hamburger-button .hamburger-line:nth-child(3) {
+    transform-origin: bottom left;
+}
+
 
 .hamburger-button:hover .hamburger-line {
     background-color: var(--accent1);
 }
+/* Animation to X */
 .hamburger-button[aria-expanded="true"] .hamburger-line:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
+    transform: rotate(45deg) translate(2px, -3px);
 }
 .hamburger-button[aria-expanded="true"] .hamburger-line:nth-child(2) {
     opacity: 0;
+    transform: translateX(10px); /* Optional: slide out */
 }
 .hamburger-button[aria-expanded="true"] .hamburger-line:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
+    transform: rotate(-45deg) translate(2px, 3px);
 }
 
 
-/* Mobile Menu Panel */
-.mobile-menu {
+/* Universal Side Panel Menu */
+.mobile-menu { /* Re-purposed for side panel */
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    right: 0;
+    width: clamp(280px, 70vw, 400px); /* Responsive width: min, preferred, max */
     height: 100%;
-    background-color: var(--primary-bg); 
+    background-color: var(--secondary-bg); 
     z-index: 1050; 
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    align-items: flex-start; /* Align items to the start (left) */
+    justify-content: flex-start; /* Align content to the top */
+    padding: calc(var(--nav-height-universal) + 30px) 30px 30px; /* Top padding below header */
+    transform: translateX(100%);
+    visibility: hidden; /* Hidden by default */
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.4s;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.2);
 }
 
 .mobile-menu.is-open {
+    transform: translateX(0);
     visibility: visible;
-    opacity: 1;
 }
 
 .mobile-menu ul {
     list-style: none;
-    text-align: center;
+    text-align: left; /* Align text to the left */
+    width: 100%; /* Full width of panel */
 }
 
 .mobile-menu ul li {
-    margin: 20px 0;
+    margin: 15px 0; /* Adjust spacing */
 }
 
 .mobile-menu ul li a {
-    font-family: var(--font-heading); 
-    font-size: 1.8rem; 
-    color: var(--heading-text);
-    padding: 10px 20px;
-    transition: color 0.3s ease;
+    font-family: var(--font-body); /* Consistent with body font */
+    font-size: 1.2rem; 
+    color: var(--primary-text); /* Use primary text for better contrast on secondary BG */
+    padding: 12px 0; /* Vertical padding, no horizontal padding needed for full width feel */
+    display: block; /* Make links block for full-width tap target */
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 4px;
 }
 
 .mobile-menu ul li a:hover,
 .mobile-menu ul li a.active {
     color: var(--accent1);
+    background-color: rgba(var(--accent1-rgb), 0.05); /* Subtle highlight */
 }
+
+.mobile-menu .order-project-btn {
+    display: inline-block; /* Button-like */
+    background-color: var(--accent1);
+    color: var(--primary-bg);
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 1.5rem; /* Space below button */
+}
+.mobile-menu .order-project-btn:hover {
+    background-color: var(--accent2);
+    color: var(--primary-bg);
+    text-decoration: none;
+}
+
+.mobile-menu .menu-divider {
+    height: 1px;
+    background-color: rgba(var(--primary-text-rgb), 0.2);
+    margin: 20px 0; /* Space around divider */
+    list-style: none; /* Remove bullet if it's an li */
+}
+
 
 .close-menu-button {
     position: absolute;
-    top: 25px; 
-    right: 25px; 
+    top: 15px; 
+    right: 20px; 
     background: none;
     border: none;
     color: var(--accent1);
-    font-size: 2.5rem;
+    font-size: 2.2rem; /* Adjust size */
     cursor: pointer;
     padding: 5px;
     line-height: 1;
@@ -269,7 +317,7 @@ header .logo a:hover {
 
 /* Main Content Sections - Increased whitespace */
 main {
-    padding-top: var(--nav-height); 
+    padding-top: var(--nav-height-universal); /* Adjusted for new universal header height */
 }
 
 section {
@@ -302,7 +350,7 @@ section:last-of-type {
 }
 
 #hero {
-    min-height: calc(100vh - var(--nav-height)); 
+    min-height: calc(100vh - var(--nav-height-universal)); 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -343,10 +391,17 @@ footer p {
 footer a {
     color: var(--accent1);
 }
-
 footer a:hover {
     color: var(--accent2);
 }
+footer .footer-copyright-link {
+    font-size: 0.9rem;
+    color: var(--primary-text); /* Subtler color for copyright */
+}
+footer .footer-copyright-link:hover {
+    color: var(--accent1);
+}
+
 
 
 /* --- Enhanced List and Card Styles --- */
@@ -373,7 +428,7 @@ footer a:hover {
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(var(--accent1-rgb, 100, 255, 218), 0.1); 
+    box-shadow: 0 6px 12px rgba(var(--accent1-rgb), 0.1); 
 }
 
 /* Card h4 already defined in Typography section */
@@ -421,7 +476,7 @@ footer a:hover {
 .table-card-grid .card p {
     display: flex; 
     justify-content: space-between;
-    border-bottom: 1px solid rgba(204, 214, 246, 0.1); 
+    border-bottom: 1px solid rgba(var(--primary-text-rgb), 0.1); 
     padding-bottom: 0.5rem;
 }
 .table-card-grid .card p:last-child {
@@ -465,7 +520,7 @@ footer a:hover {
 }
 
 /* Section-specific card grid adjustments if needed */
-#introduction .cards-grid { /* For smaller cards in intro like DAO characteristics */
+#introduction .cards-grid { 
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
     gap: 1.5rem;
 }
@@ -504,29 +559,32 @@ footer a:hover {
     section {
         padding: 100px 40px; 
     }
+    header {
+        height: var(--nav-height-universal); /* Ensure universal height is used */
+    }
+    main {
+        padding-top: var(--nav-height-universal);
+    }
 }
 
 
-/* Tablets and smaller (<= 768px) - Hamburger menu becomes active */
+/* Tablets and smaller (<= 768px) */
 @media (max-width: 768px) {
     html {
         font-size: 15px;
     }
-
-    header {
-        height: var(--nav-height-mobile); 
+     header {
+        height: var(--nav-height-universal); /* Universal header height */
         padding: 0 15px;
     }
-    .desktop-nav {
+    .desktop-nav { /* This class is no longer in HTML but good to keep if accidentally re-added */
         display: none; 
     }
     .hamburger-button {
         display: flex; 
-        flex-direction: column;
-        justify-content: space-around;
     }
     main {
-        padding-top: var(--nav-height-mobile);
+        padding-top: var(--nav-height-universal);
     }
 
     h1 { font-size: 2.2rem; }
@@ -537,11 +595,11 @@ footer a:hover {
 
 
     section {
-        padding: 100px 30px; /* Adjusted section padding for tablets */
+        padding: 100px 30px; 
     }
     #hero { 
       padding: 40px 20px; 
-      min-height: calc(100vh - var(--nav-height-mobile));
+      min-height: calc(100vh - var(--nav-height-universal));
     }
 
 
@@ -574,6 +632,13 @@ footer a:hover {
       padding: 30px 15px; 
     }
 
+    header .logo a {
+        font-size: 1.1rem; /* Further reduce logo on very small screens */
+    }
+    header {
+        padding: 0 15px;
+    }
+
 
     .card {
         padding: 1.5rem; 
@@ -594,6 +659,10 @@ footer a:hover {
         margin-top: 0.3em; 
     }
 
+    .mobile-menu {
+        width: 90%; /* More screen coverage on small mobiles */
+        padding: calc(var(--nav-height-universal) + 20px) 20px 20px;
+    }
     .mobile-menu ul li a {
         font-size: 1.5rem; 
     }
@@ -602,14 +671,17 @@ footer a:hover {
         top: 15px;
         right: 15px;
     }
+    .recommendations-container ol li {
+        padding: 1.25rem 1.5rem 1.25rem 3rem; /* Adjust padding for smaller counter */
+    }
+    .recommendations-container ol li::before {
+        width: 28px;
+        height: 28px;
+        left: 1rem;
+    }
+
 }
 
-/* Active Link Styling for JS - Example */
-/* nav a.active-link {
-    color: var(--accent1);
-    font-weight: bold;
-    border-bottom: 2px solid var(--accent1);
-} */
 
 /* --- Table Specific Visualizations --- */
 
@@ -623,8 +695,8 @@ footer a:hover {
     border-bottom: 1px solid var(--secondary-bg);
     text-align: left;
 }
-.visualization-container > h4 {
-    font-size: 1.3rem; 
+.visualization-container > h4 { /* This is the table title, e.g., "Table 1: ..." */
+    font-size: 1.4rem; /* Adjusted to match other H4s */
     color: var(--accent2);
     margin-bottom: 1em; 
 }

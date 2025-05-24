@@ -1,22 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const desktopNavLinks = document.querySelectorAll('header nav.desktop-nav ul li a');
     const sections = document.querySelectorAll('main section[id]');
     const backToTopLink = document.querySelector('footer a[href="#hero"]');
     
-    // Hamburger Menu Elements
+    // Universal Side Panel Menu Elements
     const hamburgerBtn = document.getElementById('hamburger-btn');
-    const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+    const sidePanel = document.getElementById('mobile-menu-panel'); // Renamed for clarity
     const closeMenuBtn = document.getElementById('close-menu-btn');
-    const mobileMenuLinks = document.querySelectorAll('#mobile-menu-panel ul li a');
+    // All clickable <a> elements in the side panel
+    const allSidePanelLinks = document.querySelectorAll('#mobile-menu-panel ul li a');
+    // Only <a> elements that scroll to sections (internal page links)
+    const sectionNavLinks = document.querySelectorAll('#mobile-menu-panel ul li a[href^="#"]');
 
-    // Determine navHeight dynamically based on current viewport (for sticky header offset)
+    // Consistent header height for scroll offset calculation
     function getStickyNavHeight() {
-        const desktopNavHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'), 10) || 70;
-        const mobileNavHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height-mobile'), 10) || 60;
-        return window.innerWidth <= 768 ? mobileNavHeight : desktopNavHeight;
+        return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height-universal'), 10) || 60;
     }
     
-    // Function to update active navigation link for both desktop and mobile
+    // Function to update active navigation link in the side panel
     function updateActiveLink() {
         let currentSectionId = '';
         const scrollPosition = window.scrollY;
@@ -26,11 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const sectionTop = section.offsetTop - currentNavHeight;
             const sectionBottom = sectionTop + section.offsetHeight;
 
-            if (scrollPosition >= sectionTop - currentNavHeight / 2 && scrollPosition < sectionBottom - currentNavHeight / 2) {
+            // Adjust threshold for determining active section
+            if (scrollPosition >= sectionTop - currentNavHeight * 0.5 && scrollPosition < sectionBottom - currentNavHeight * 0.5) {
                 currentSectionId = section.getAttribute('id');
             }
         });
         
+        // Fallback for bottom of page or very top
         if (!currentSectionId && scrollPosition + window.innerHeight >= document.body.offsetHeight - currentNavHeight) {
             currentSectionId = sections[sections.length - 1].getAttribute('id');
         }
@@ -38,15 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
              currentSectionId = sections[0].getAttribute('id');
         }
 
-        // Update desktop links
-        desktopNavLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${currentSectionId}`) {
-                link.classList.add('active');
-            }
-        });
-        // Update mobile links
-        mobileMenuLinks.forEach(link => {
+        sectionNavLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href') === `#${currentSectionId}`) {
                 link.classList.add('active');
@@ -54,14 +48,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Listen for scroll events
+    // Listen for scroll and resize events
     window.addEventListener('scroll', updateActiveLink);
-    window.addEventListener('resize', updateActiveLink); // Update on resize as navHeight might change
+    window.addEventListener('resize', () => {
+        // Close panel on resize to desktop view if open, for example
+        if (window.innerWidth > 768 && sidePanel.classList.contains('is-open')) { // Assuming 768px is mobile breakpoint
+            toggleSidePanel();
+        }
+        updateActiveLink(); // Recalculate active link based on new dimensions/offsets
+    });
 
     // Set initial active link on page load
     function setInitialActiveState() {
         const currentNavHeight = getStickyNavHeight();
-        if (window.location.hash) {
+        if (window.location.hash && window.location.hash !== "#") { // Ensure hash is not empty
             const targetSection = document.querySelector(window.location.hash);
             if (targetSection) {
                 setTimeout(() => {
@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     setInitialActiveState();
 
-
     // Smooth scroll for "Back to Top" link
     if (backToTopLink) {
         backToTopLink.addEventListener('click', (e) => {
@@ -94,22 +93,27 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 window.location.hash = '#hero';
             }
-            // updateActiveLink(); // Scroll event will handle this
+            // updateActiveLink will be triggered by scroll event
         });
     }
 
     // Generic smooth scroll handler for navigation links
-    function handleSmoothScroll(e) {
-        const targetId = this.getAttribute('href');
-        if (targetId.startsWith('#')) {
-            e.preventDefault();
+    function handleSmoothScroll(event) {
+        const targetId = this.getAttribute('href'); // 'this' refers to the link clicked
+        // Ensure it's an internal section link
+        if (targetId && targetId.startsWith('#') && targetId.length > 1) { 
+            event.preventDefault(); // Prevent default anchor jump
             const targetSection = document.querySelector(targetId);
             if (targetSection) {
                 const currentNavHeight = getStickyNavHeight();
+                const targetPosition = targetSection.offsetTop - currentNavHeight;
+                
                 window.scrollTo({
-                    top: targetSection.offsetTop - currentNavHeight,
+                    top: targetPosition,
                     behavior: 'smooth'
                 });
+
+                // Update URL hash after scrolling is initiated
                 if (history.pushState) {
                     history.pushState(null, null, targetId);
                 } else {
@@ -117,33 +121,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+        // If it's not an internal section link (e.g. external), default behavior will apply (opening in new tab if target="_blank")
     }
 
-    // Apply smooth scroll to desktop navigation links
-    desktopNavLinks.forEach(link => {
-        link.addEventListener('click', handleSmoothScroll);
-    });
-
-    // --- Hamburger Menu Functionality ---
-    function toggleMobileMenu() {
-        const isOpen = mobileMenuPanel.classList.toggle('is-open');
+    // --- Universal Side Panel Menu Functionality ---
+    function toggleSidePanel() {
+        const isOpen = sidePanel.classList.toggle('is-open');
         hamburgerBtn.setAttribute('aria-expanded', isOpen.toString());
-        mobileMenuPanel.setAttribute('aria-hidden', (!isOpen).toString());
-        document.body.classList.toggle('body-no-scroll', isOpen); // Toggle scroll lock on body
+        sidePanel.setAttribute('aria-hidden', (!isOpen).toString());
+        document.body.classList.toggle('body-no-scroll', isOpen); 
     }
 
-    if (hamburgerBtn && mobileMenuPanel && closeMenuBtn) {
-        hamburgerBtn.addEventListener('click', toggleMobileMenu);
-        closeMenuBtn.addEventListener('click', toggleMobileMenu);
+    if (hamburgerBtn && sidePanel && closeMenuBtn) {
+        hamburgerBtn.addEventListener('click', toggleSidePanel);
+        closeMenuBtn.addEventListener('click', toggleSidePanel);
 
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                // Close the menu first
-                if (mobileMenuPanel.classList.contains('is-open')) {
-                    toggleMobileMenu();
+        // Add event listeners to all links in the side panel
+        allSidePanelLinks.forEach(link => {
+            link.addEventListener('click', function(e) { // Use 'function' to correctly bind 'this' for handleSmoothScroll
+                const href = this.getAttribute('href');
+                
+                // If it's a section link, handle smooth scroll
+                if (href && href.startsWith('#') && href.length > 1) {
+                    handleSmoothScroll.call(this, e); // Pass event and correct 'this'
                 }
-                // Then handle smooth scroll (using the generic handler)
-                handleSmoothScroll.call(this, e); 
+                // Else, it's an external link or special button; default action will proceed.
+                
+                // Close the panel after any link click
+                if (sidePanel.classList.contains('is-open')) {
+                    // Delay closing slightly to allow default action (like opening new tab)
+                    setTimeout(toggleSidePanel, 100); 
+                }
             });
         });
     }
