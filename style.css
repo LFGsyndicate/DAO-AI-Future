@@ -1,0 +1,597 @@
+/* CSS Variables */
+:root {
+    --primary-bg: #0A192F;
+    --secondary-bg: #172A45;
+    --primary-text: #CCD6F6;
+    --heading-text: #E6F1FF;
+    --accent1: #64FFDA;
+    --accent2: #FFBF69;
+
+    --font-body: 'Inter', sans-serif;
+    --font-heading: 'Roboto Mono', monospace; /* Or 'Space Grotesk' */
+
+    --nav-height: 70px; /* Example value, adjust as needed */
+}
+
+/* Basic Reset & Global Styles */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px; /* Base font size */
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    line-height: 1.7; /* Adjusted from 1.6-1.8 for better readability */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Subtle background gradient - uncomment and customize if desired */
+    /* background: linear-gradient(180deg, var(--primary-bg) 0%, #081424 100%); */
+}
+
+/* Typography Styling */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--heading-text);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+h1 {
+    font-size: 2.8rem; /* Approx 44.8px */
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 2rem; /* Approx 32px */
+    margin-bottom: 1.25rem;
+    border-bottom: 2px solid var(--accent1);
+    padding-bottom: 0.5rem;
+    display: inline-block; /* To make border only as wide as text */
+}
+
+h3 {
+    font-size: 1.5rem; /* Approx 24px */
+    color: var(--accent1); /* Using accent for H3 as per some modern designs */
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--accent1);
+    text-decoration: none;
+    transition: color 0.3s ease, filter 0.3s ease;
+}
+
+a:hover,
+a:focus {
+    color: var(--accent2);
+    /* filter: brightness(1.2); */
+    text-decoration: underline;
+}
+
+/* Header and Navigation */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background-color: rgba(23, 42, 69, 0.85); /* var(--secondary-bg) with transparency */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    z-index: 1000;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* For logo and nav items */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+header .logo a {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--heading-text);
+    font-weight: bold;
+}
+header .logo a:hover {
+    color: var(--accent1);
+    text-decoration: none;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Spacing between nav items */
+}
+
+header nav ul li a {
+    font-family: var(--font-body); /* Using body font for nav links for clarity */
+    color: var(--primary-text);
+    padding: 10px 15px;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header nav ul li a:hover,
+header nav ul li a.active { /* .active class will be added by JS */
+    color: var(--accent1);
+    background-color: rgba(100, 255, 218, 0.1); /* Subtle highlight */
+    text-decoration: none;
+}
+
+/* Main Content Sections */
+main {
+    padding-top: var(--nav-height); /* Offset content below fixed header */
+}
+
+section {
+    padding: 80px 40px; /* Increased padding */
+    min-height: 80vh; /* Default min-height */
+    /* border-bottom: 1px solid var(--secondary-bg); /* Subtle separator */
+}
+
+section:last-of-type {
+    border-bottom: none;
+}
+
+#hero {
+    min-height: calc(100vh - var(--nav-height)); /* Fill screen below nav */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* HERO BACKGROUND IMAGE: Replace 'placeholder-hero-bg.jpg' with a high-quality,
+       abstract image fitting an ultra-modern AI/DAO theme (e.g., plexus network,
+       geometric design, data visualization motif, or stylized nebula/space).
+       Ensure the image is web-optimized for performance. */
+    background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)), url('placeholder-hero-bg.jpg') no-repeat center center/cover;
+    /* Add a subtle pattern or animated gradient if desired */
+}
+
+#hero h1 {
+    font-size: 3.5rem; /* Larger for hero */
+    max-width: 800px;
+}
+#hero p {
+    font-size: 1.2rem;
+    color: var(--accent1);
+}
+
+
+/* Footer */
+footer {
+    background-color: var(--secondary-bg);
+    color: var(--primary-text);
+    text-align: center;
+    padding: 40px 20px;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+footer a {
+    color: var(--accent1);
+}
+
+footer a:hover {
+    color: var(--accent2);
+}
+
+/* Placeholder Sections for Future Components */
+/* Styles for Table Visualizations */
+/* Card Component Styles */
+/* Abstract Geometric Shapes & Thin Line Accents */
+
+/* --- Enhanced List and Card Styles --- */
+.visual-list-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.card {
+    background-color: var(--secondary-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid var(--accent1); /* Accent border */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(var(--accent1-rgb, 100, 255, 218), 0.15); /* Use RGB version of accent1 for shadow */
+}
+
+.card h4 {
+    color: var(--accent1);
+    font-size: 1.25rem; /* Approx 20px */
+    margin-bottom: 0.75rem;
+    font-family: var(--font-heading);
+}
+
+.card h5 {
+    color: var(--heading-text);
+    font-size: 1.1rem; /* Approx 17.6px */
+    margin-bottom: 0.5rem;
+    font-family: var(--font-heading);
+}
+
+.card p {
+    font-size: 0.95rem; /* Approx 15.2px */
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.card p strong {
+    color: var(--primary-text); /* Brighter than regular p text if needed */
+    font-weight: 600;
+}
+
+.card ul {
+    list-style: none; /* Remove default bullets if styling as cards */
+    padding-left: 0;
+}
+
+.card ul li {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    padding-left: 1.2em;
+    position: relative;
+}
+
+.card ul li::before {
+    content: '»'; /* Or a more modern icon/SVG */
+    position: absolute;
+    left: 0;
+    color: var(--accent1);
+    font-weight: bold;
+}
+
+/* Specific styling for table-like cards */
+.table-card-grid .card p {
+    display: flex; /* For aligning label and value */
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(204, 214, 246, 0.1); /* Subtle separator for items */
+    padding-bottom: 0.5rem;
+}
+.table-card-grid .card p:last-child {
+    border-bottom: none;
+}
+
+.table-card-grid .card p strong {
+    color: var(--accent1); /* Label color */
+    margin-right: 10px;
+    flex-shrink: 0; /* Prevent label from shrinking */
+}
+.table-card-grid .card p span {
+    text-align: right; /* Align value to the right */
+    color: var(--primary-text);
+}
+
+/* Enhanced List Styling */
+.enhanced-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+}
+
+.enhanced-list li {
+    background-color: var(--secondary-bg);
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.75rem;
+    border-radius: 6px;
+    border-left: 3px solid var(--accent2);
+    transition: background-color 0.3s ease;
+}
+
+.enhanced-list li:hover {
+    background-color: #2A3F5E; /* Slightly lighter shade of secondary-bg */
+}
+
+.enhanced-list li strong { /* For emphasizing parts of the list item */
+    color: var(--accent1);
+}
+
+/* Section-specific card grid adjustments if needed */
+#introduction .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Smaller cards for intro section */
+}
+
+/* Scrollbar Styling (Webkit Browsers) */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-bg);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent1);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) { /* Medium devices (tablets, less than 992px) */
+    .cards-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+
+/* Tablets and larger phones */
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+    #hero h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    section {
+        padding: 60px 20px;
+    }
+
+    header {
+        padding: 0 15px;
+        height: auto; /* Allow header to grow if nav items wrap */
+        min-height: var(--nav-height);
+    }
+    
+    header nav {
+        width: 100%; /* Make nav take full width if needed for hamburger */
+    }
+
+    header nav ul {
+        /* For now, allow wrapping. Later, implement hamburger */
+        flex-wrap: wrap;
+        justify-content: center; /* Center wrapped items */
+        gap: 5px; /* Reduced gap for wrapped items */
+        padding-top: 5px; /* Add some space if wrapping below logo */
+        padding-bottom: 5px;
+    }
+    header nav ul li a {
+        padding: 8px 10px;
+    }
+    header .logo a {
+        font-size: 1.3rem;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr; /* Stack cards on smaller tablets / large phones */
+    }
+}
+
+/* Smaller mobile phones */
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+    #hero h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    section {
+        padding: 40px 15px;
+    }
+    
+    header .logo {
+        /* Potentially hide logo text on very small screens or make it smaller */
+        margin-bottom: 10px; /* Space if nav wraps below */
+    }
+
+    header {
+        flex-direction: column; /* Stack logo and nav */
+        align-items: center;
+        padding-bottom: 10px;
+    }
+
+    header nav ul {
+        gap: 5px;
+    }
+    header nav ul li a {
+        font-size: 0.9rem;
+        padding: 6px 8px;
+    }
+    .card {
+        padding: 1rem;
+    }
+    .card h4 {
+        font-size: 1.15rem;
+    }
+    .card p {
+        font-size: 0.9rem;
+    }
+    .table-card-grid .card p {
+        flex-direction: column; /* Stack label and value */
+        align-items: flex-start;
+    }
+    .table-card-grid .card p span {
+        text-align: left;
+        margin-top: 0.25rem;
+    }
+}
+
+/* Active Link Styling for JS - Example */
+/* nav a.active-link {
+    color: var(--accent1);
+    font-weight: bold;
+    border-bottom: 2px solid var(--accent1);
+} */
+
+/* --- Table Specific Visualizations --- */
+
+/* Common style for the heading of a visualization container */
+.visualization-container > h3,
+.visualization-container > h4 { /* For sub-headings within viz sections */
+    font-size: 1.6rem; /* Approx 25.6px */
+    color: var(--heading-text);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--secondary-bg);
+    text-align: left;
+}
+.visualization-container > h4 {
+    font-size: 1.3rem;
+    color: var(--accent2);
+}
+
+
+/* Table 1: DAO Governance Models */
+#table1-viz .card h4 { /* Governance Model Name */
+    border-bottom: 1px solid var(--accent2);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+#table1-viz .card p strong { /* Labels like "Key Characteristics:" */
+    display: block;
+    color: var(--primary-text); /* Slightly less emphasis than accent1 */
+    margin-bottom: 0.25rem;
+    font-weight: 600; /* Ensure it's bold */
+}
+#table1-viz .card p { /* Text content for each characteristic */
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+}
+
+
+/* Table 2: AI Agent Capabilities */
+#table2-viz .card {
+    border-left-color: var(--accent2); /* Different accent for this table */
+}
+#table2-viz .card h4 { /* Capability Name */
+    color: var(--accent2);
+}
+#table2-viz .card p strong { /* "Description:" */
+    color: var(--primary-text);
+    font-weight: 600;
+}
+#table2-viz .card p:last-child { /* Specific DAO Application Examples */
+    margin-top: 0.5rem;
+    font-style: italic;
+    color: #a8b2d1; /* Lighter text for examples */
+}
+
+
+/* Table 3 & 4 & 5 & 6 will use .table-card-grid for key-value pair styling within cards */
+.table-card-grid .card h4 { /* Main item title e.g., Revenue Model or DAO Limitation */
+    border-bottom: 1px solid var(--accent2);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* For lists that are transformed into cards or visually distinct items */
+.list-visualization-container > h4 {
+    font-size: 1.3rem; /* Consistent with other sub-headings */
+    color: var(--accent2);
+    margin-bottom: 1rem;
+}
+
+.list-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.list-cards-grid .card {
+    padding: 1.25rem; /* Slightly smaller padding for list cards */
+}
+.list-cards-grid .card ul li::before {
+    content: '✓'; /* Checkmark for these lists */
+}
+
+/* Actionable recommendations custom styling */
+.recommendations-container > div {
+    margin-bottom: 2.5rem;
+}
+.recommendations-container h4 { /* e.g., "For Startups:" */
+    font-size: 1.4rem;
+    color: var(--accent1);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--secondary-bg);
+}
+.recommendations-container ol {
+    list-style: none;
+    padding-left: 0;
+    counter-reset: recommendation-counter;
+}
+.recommendations-container ol li {
+    background-color: var(--secondary-bg);
+    padding: 1rem 1.5rem 1rem 3rem; /* More padding on left for counter */
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border-left: 4px solid var(--accent2);
+    position: relative;
+    counter-increment: recommendation-counter;
+    font-size: 0.95rem;
+}
+.recommendations-container ol li::before {
+    content: counter(recommendation-counter);
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--accent2);
+    color: var(--primary-bg);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-family: var(--font-heading);
+}
+.recommendations-container ol li strong {
+    color: var(--heading-text);
+}
