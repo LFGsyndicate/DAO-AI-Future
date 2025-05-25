@@ -155,4 +155,31 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // Scroll to Top Button Functionality
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+    if (scrollToTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show after 300px scroll
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            // Optional: update hash, consistent with footer link
+            if (history.pushState) {
+                history.pushState(null, null, '#hero');
+            } else {
+                window.location.hash = '#hero';
+            }
+        });
+    }
 });
