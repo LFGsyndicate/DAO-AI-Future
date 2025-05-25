@@ -373,7 +373,7 @@ section:last-of-type {
     border-bottom: none;
 }
 
-#hero {
+#your-element-selector {
     min-height: calc(100vh - var(--nav-height-universal)); 
     display: flex;
     flex-direction: column;
@@ -389,12 +389,12 @@ section:last-of-type {
     /* background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)), url('placeholder-hero-bg.jpg') no-repeat center center/cover; Removed for Vanta.js */
 }
 
-#hero h1 {
+#your-element-selector h1 {
     font-size: 3.2rem; 
     max-width: 900px; 
     margin-bottom: 1em;
 }
-#hero p {
+#your-element-selector p {
     font-size: 1.25rem; 
     color: var(--accent1);
     margin-top: 0.5em;
@@ -595,7 +595,7 @@ footer .footer-copyright-link:hover {
     h1 { font-size: 2.6rem; }
     h2 { font-size: 2rem; }
     h3 { font-size: 1.6rem; }
-    #hero h1 { font-size: 2.8rem; }
+    #your-element-selector h1 { font-size: 2.8rem; }
     section {
         padding: 100px 40px; 
     }
@@ -632,7 +632,7 @@ footer .footer-copyright-link:hover {
     }
 
     h1 { font-size: 2.2rem; }
-    #hero h1 { font-size: 2.5rem; }
+    #your-element-selector h1 { font-size: 2.5rem; }
     h2 { font-size: 1.8rem; }
     h3 { font-size: 1.4rem; }
     h4 { font-size: 1.2rem; }
@@ -641,7 +641,7 @@ footer .footer-copyright-link:hover {
     section {
         padding: 100px 30px; 
     }
-    #hero { 
+    #your-element-selector { 
       padding: 40px 20px; 
       min-height: calc(100vh - var(--nav-height-universal));
     }
@@ -669,7 +669,7 @@ footer .footer-copyright-link:hover {
     }
 
     h1 { font-size: 1.8rem; } 
-    #hero h1 { font-size: 2rem; }
+    #your-element-selector h1 { font-size: 2rem; }
     h2 { font-size: 1.5rem; }
     h3 { font-size: 1.25rem; }
     h4 { font-size: 1.05rem; }
@@ -678,7 +678,7 @@ footer .footer-copyright-link:hover {
     section {
         padding: 80px 20px; 
     }
-     #hero { 
+     #your-element-selector { 
       padding: 30px 15px; 
     }
 
