@@ -647,7 +647,6 @@ footer .footer-copyright-link:hover {
         height: var(--nav-height-universal); 
     }
     main {
-        padding-top: var(--nav-height-universal);
     }
      .mobile-menu {
         padding-top: calc(var(--nav-height-universal) + 25px);
@@ -672,7 +671,6 @@ footer .footer-copyright-link:hover {
         display: flex; 
     }
     main {
-        padding-top: var(--nav-height-universal);
     }
 
     h1 { font-size: 2.2rem; }
