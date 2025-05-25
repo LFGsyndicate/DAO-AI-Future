@@ -149,7 +149,7 @@ header {
     left: 0;
     width: 100%;
     height: var(--nav-height-universal); 
-    background-color: rgba(10, 25, 47, 0.3825); 
+    background-color: rgba(10, 25, 47, 0.85); 
     backdrop-filter: blur(10px); 
     z-index: 1060; 
     padding: 0 20px; 
