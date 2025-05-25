@@ -686,7 +686,10 @@ footer .footer-copyright-link:hover {
         padding: 100px 30px; 
     }
     #your-element-selector { 
-      padding: 40px 20px; 
+      padding-top: var(--nav-height-universal);
+      padding-right: 20px;
+      padding-bottom: 40px; 
+      padding-left: 20px;
       min-height: calc(100vh - var(--nav-height-universal));
     }
 
@@ -723,7 +726,10 @@ footer .footer-copyright-link:hover {
         padding: 80px 20px; 
     }
      #your-element-selector { 
-      padding: 30px 15px; 
+      padding-top: var(--nav-height-universal);
+      padding-right: 15px;
+      padding-bottom: 30px;
+      padding-left: 15px;
     }
 
     header .logo a {
