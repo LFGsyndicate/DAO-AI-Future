@@ -381,11 +381,12 @@ section:last-of-type {
     align-items: center;
     text-align: center;
     padding: 60px 30px; 
+    position: relative; /* Added for Vanta.js integration */
     /* HERO BACKGROUND IMAGE: Replace 'placeholder-hero-bg.jpg' with a high-quality,
        abstract image fitting an ultra-modern AI/DAO theme (e.g., plexus network,
        geometric design, data visualization motif, or stylized nebula/space).
        Ensure the image is web-optimized for performance. */
-    background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)), url('placeholder-hero-bg.jpg') no-repeat center center/cover;
+    /* background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)), url('placeholder-hero-bg.jpg') no-repeat center center/cover; Removed for Vanta.js */
 }
 
 #hero h1 {
