@@ -521,8 +521,10 @@ footer .footer-copyright-link:hover {
     flex-shrink: 0; 
 }
 .table-card-grid .card p span {
-    text-align: right; 
+    text-align: left; /* Changed from right to left */
     color: var(--primary-text);
+    flex-grow: 1; /* Added */
+    word-break: break-word; /* Added */
 }
 
 /* Enhanced List Styling */
