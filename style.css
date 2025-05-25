@@ -352,7 +352,6 @@ header .logo a:hover {
 
 /* Main Content Sections - Increased whitespace */
 main {
-    padding-top: var(--nav-height-universal); 
 }
 
 section {
