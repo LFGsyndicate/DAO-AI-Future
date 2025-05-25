@@ -506,25 +506,30 @@ footer .footer-copyright-link:hover {
 
 /* Specific styling for table-like cards */
 .table-card-grid .card p {
-    display: flex; 
-    justify-content: space-between;
+    /* display: flex; removed */
+    /* justify-content: space-between; removed */
     border-bottom: 1px solid rgba(var(--primary-text-rgb), 0.1); 
     padding-bottom: 0.5rem;
+    margin-bottom: 1em; /* Added to separate p elements more clearly */
 }
 .table-card-grid .card p:last-child {
     border-bottom: none;
+    margin-bottom: 0; /* No margin for the last p in a card */
 }
 
 .table-card-grid .card p strong {
     color: var(--accent1); 
-    margin-right: 10px;
-    flex-shrink: 0; 
+    /* margin-right: 10px; removed */
+    /* flex-shrink: 0; removed */
+    display: block; /* Added */
+    margin-bottom: 0.25em; /* Added */
 }
 .table-card-grid .card p span {
-    text-align: left; /* Changed from right to left */
+    text-align: left; 
     color: var(--primary-text);
-    flex-grow: 1; /* Added */
-    word-break: break-word; /* Added */
+    /* flex-grow: 1; removed */
+    word-break: break-word; 
+    display: block; /* Added */
 }
 
 /* Enhanced List Styling */
@@ -694,6 +699,12 @@ footer .footer-copyright-link:hover {
         font-size: 0.92rem;
     }
 
+    /* Styles for .table-card-grid .card p and .table-card-grid .card p span 
+       within @media (max-width: 480px) are now largely handled by the main rules.
+       The flex-direction and align-items are no longer needed.
+       The margin-top on span might be redundant due to margin-bottom on strong.
+       Removing these specific overrides for cleaner code. */
+    /* 
     .table-card-grid .card p {
         flex-direction: column; 
         align-items: flex-start;
@@ -702,6 +713,7 @@ footer .footer-copyright-link:hover {
         text-align: left;
         margin-top: 0.3em; 
     }
+    */
 
     .mobile-menu {
         width: 90%; 
